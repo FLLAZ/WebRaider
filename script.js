@@ -26,7 +26,8 @@ let messageContent = '';
 const tokensInput = document.getElementById('tokens');
 const guildInput = document.getElementById('guildId');
 const channelInput = document.getElementById('channelIds');
-const messageFileInput = document.getElementById('messageFile');
+const messageTextArea = document.getElementById('messageText');
+//const messageFileInput = document.getElementById('messageFile');
 const randomizeCheckbox = document.getElementById('randomize');
 const allmentionCheckbox = document.getElementById('allmention');
 const delayInput = document.getElementById('delay');
@@ -69,8 +70,7 @@ async function leaveGuild(token, guildId) {
     }
 }
 
-// ファイル読み込み処理
-messageFileInput.addEventListener('change', function(e) {
+/*messageFileInput.addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
@@ -82,6 +82,7 @@ messageFileInput.addEventListener('change', function(e) {
         reader.readAsText(file);
     }
 });
+*/
 
 autoFillBtn.addEventListener('click', async () => {
     clearLog();
@@ -298,8 +299,10 @@ async function sendMessageWithRetry(token, channelId, message, options = {}, max
 function checkFormValidity() {
     const hasTokens = tokensInput.value.trim();
     const hasGuildId = guildInput.value.trim();
-    const hasMessage = messageContent.trim();
+    //const hasMessage = messageContent.trim();
+    const hasMessage = messageTextArea.value.trim();
     submitBtn.disabled = !(hasTokens && hasGuildId && hasMessage);
+    messageTextArea.addEventListener('input', checkFormValidity);
 }
 
 tokensInput.addEventListener('input', checkFormValidity);
@@ -307,11 +310,22 @@ guildInput.addEventListener('input', checkFormValidity);
 messageFileInput.addEventListener('change', checkFormValidity);
 checkFormValidity();
 
+/*
 form.addEventListener('submit', async event => {
     event.preventDefault();
     
     if (!messageContent) {
         appendLog('⚠️ メッセージファイルを選択してください');
+        return;
+    }
+*/
+form.addEventListener('submit', async event => {
+    event.preventDefault();
+    
+    messageContent = messageTextArea.value.trim();   // ← ここを追加
+    
+    if (!messageContent) {
+        appendLog('⚠️ メッセージを入力してください');
         return;
     }
     
@@ -334,7 +348,6 @@ form.addEventListener('submit', async event => {
     
     let messageCount = 0;
     
-    // すべてのトークンで同時に送信開始
     const sendPromises = tokens.map(token => {
         return async () => {
             let channelIndex = 0;
@@ -367,7 +380,6 @@ form.addEventListener('submit', async event => {
         };
     });
     
-    // すべてのトークンで同時実行
     await Promise.all(sendPromises.map(send => send()));
     
     submitBtn.disabled = false;
