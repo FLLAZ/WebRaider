@@ -307,7 +307,7 @@ function checkFormValidity() {
 
 tokensInput.addEventListener('input', checkFormValidity);
 guildInput.addEventListener('input', checkFormValidity);
-messageFileInput.addEventListener('change', checkFormValidity);
+//messageFileInput.addEventListener('change', checkFormValidity);
 checkFormValidity();
 
 /*
