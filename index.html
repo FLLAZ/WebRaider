@@ -502,7 +502,7 @@ FLLAZはあなたのようなエンジニアを募集しています。
           <i class="fas fa-file-alt"></i>
           <span>メッセージ設定</span>
         </div>
-        
+        <!--
         <label>メッセージファイル</label>
         <div class="file-input-container">
           <input type="file" id="messageFile" accept=".txt" required>
@@ -513,7 +513,7 @@ FLLAZはあなたのようなエンジニアを募集しています。
         </div>
         <div class="file-name" id="fileName">ファイルが選択されていません</div>
         <small>選択したテキストファイルの内容全体が1つのメッセージとして送信されます</small>
-
+      
         <label class="checkbox-container">
           <input type="checkbox" id="allmention" checked>
           <span>@everyoneを追加</span>
@@ -524,6 +524,31 @@ FLLAZはあなたのようなエンジニアを募集しています。
           <span>メッセージをランダマイズ（UUID追加）</span>
         </label>
         
+        <div class="row">
+          <label>送信間隔
+            <input type="number" id="delay" min="0" step="0.1" placeholder="0"> 秒
+          </label>
+          <label>送信上限
+            <input type="number" id="limit" min="1" step="1" placeholder="無制限"> 回
+          </label>
+        </div>
+      </div>
+        -->
+
+        <label>送信するメッセージ
+        <textarea id="messageText" rows="6" placeholder="ここに送信したいメッセージを入力してください"></textarea>
+        </label>
+
+        <label class="checkbox-container">
+          <input type="checkbox" id="allmention" checked>
+          <span>@everyoneを追加</span>
+        </label>
+  
+        <label class="checkbox-container">
+          <input type="checkbox" id="randomize">
+          <span>メッセージをランダマイズ（UUID追加）</span>
+        </label>
+  
         <div class="row">
           <label>送信間隔
             <input type="number" id="delay" min="0" step="0.1" placeholder="0"> 秒
